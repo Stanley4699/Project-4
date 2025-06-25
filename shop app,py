@@ -1,0 +1,58 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import pickle
+
+# Load saved clustering model (if available)
+# with open('clustering_model.pkl', 'rb') as f:
+#     clustering_model = pickle.load(f)
+
+# Load product similarity matrix (if available)
+# product_similarity = pd.read_pickle("product_similarity.pkl")
+# products = list(product_similarity.index)
+
+st.set_page_config(page_title="Shopper Spectrum", layout="centered")
+
+# Main Title
+st.title("🛒 Shopper Spectrum")
+st.subheader("A Simple Tool for Product Recommendations & Customer Segmentation")
+
+# Choose mode
+option = st.radio("Choose what you want to do:", ["🔍 Recommend Products", "👥 Segment Customer"])
+
+# ---------------------------------------------
+# Product Recommendation Module
+# ---------------------------------------------
+if option == "🔍 Recommend Products":
+    st.header("📦 Product Recommendation")
+
+    product_name = st.text_input("Enter Product Name")
+
+    if st.button("Get Recommendations"):
+        # Fake demo output — Replace with real similarity logic
+        st.success(f"Top 5 Products similar to **{product_name}**:")
+        demo = ["Product A", "Product B", "Product C", "Product D", "Product E"]
+        for i, item in enumerate(demo, 1):
+            st.write(f"{i}. {item}")
+
+# ---------------------------------------------
+# Customer Segmentation Module
+# ---------------------------------------------
+elif option == "👥 Segment Customer":
+    st.header("👤 Customer Segmentation")
+
+    recency = st.number_input("Recency (days since last purchase)", min_value=0)
+    frequency = st.number_input("Frequency (number of purchases)", min_value=0)
+    monetary = st.number_input("Monetary (total amount spent)", min_value=0.0)
+
+    if st.button("Predict Cluster"):
+        # Fake prediction — Replace with model.predict()
+        if frequency > 50 and monetary > 1000:
+            st.success("Segment: High-Value Customer")
+        elif frequency > 20:
+            st.success("Segment: Regular Customer")
+        elif recency > 100:
+            st.warning("Segment: At-Risk Customer")
+        else:
+            st.info("Segment: Occasional Customer")
+
